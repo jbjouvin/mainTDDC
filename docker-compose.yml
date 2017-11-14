@@ -4,8 +4,8 @@ services:
 
   users-db:
     container_name: users-db
-    build: ./project/db
-    # build: https://github.com/realpython/flask-microservices-users.git#master:project/db
+    # build: ./project/db
+    build: https://github.com/jbjouvin/TDDC.git#master:project/db
     ports:
         - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -16,10 +16,10 @@ services:
 
   users-service:
     container_name: users-service
-    build: .
-    # build: https://github.com/realpython/flask-microservices-users.git
-    volumes:
-      - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
+    # build: .
+    build: https://github.com/jbjouvin/TDDC.git
+    # volumes:
+    #   - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
     expose:
       - "5000"
     environment:
