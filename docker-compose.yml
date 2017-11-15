@@ -5,7 +5,7 @@ services:
   users-db:
     container_name: users-db
     # build: ./project/db
-    build: https://github.com/jbjouvin/TDDC.git#master:project/db
+    build: https://github.com/jbjouvin/usersTDDC.git#master:project/db
     ports:
         - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -17,7 +17,7 @@ services:
   users-service:
     container_name: users-service
     # build: .
-    build: https://github.com/jbjouvin/TDDC.git
+    build: https://github.com/jbjouvin/usersTDDC.git
     # volumes:
     #   - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
     expose:
@@ -31,6 +31,7 @@ services:
         condition: service_healthy
     links:
       - users-db
+    command: gunicorn -b 0.0.0.0:5000 manage:app
 
   nginx:
     container_name: nginx

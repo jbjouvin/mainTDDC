@@ -4,7 +4,8 @@ services:
 
   users-db:
     container_name: users-db
-    build: ./project/db
+    # build: ./project/db
+    build: https://github.com/jbjouvin/usersTDDC.git#master:project/db
     ports:
         - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -15,7 +16,8 @@ services:
 
   users-service:
     container_name: users-service
-    build: .
+    # build: .
+    build: https://github.com/jbjouvin/usersTDDC.git
     expose:
       - "5000"
     environment:
