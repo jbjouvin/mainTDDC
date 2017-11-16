@@ -15,7 +15,12 @@ before_install:
 
 before_script:
   - docker-compose up --build -d
-
+  - export APP_SETTINGS="project.config.TestingConfig"
+  - export DATABASE_TEST_URL=postgresql://postgres:@localhost/users_test
+  - export SECRET_KEY='my_precious'
+  - psql -c 'create database users_test;' -U postgres
+  - python manage.py recreate_db
+  
 script:
   - docker-compose run users-service python manage.py test
 
