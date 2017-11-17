@@ -21,12 +21,12 @@ services:
     # volumes:
     #   - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
     expose:
-      - "5000"
+      - "5001:5000"
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - SECRET_KEY='my_precious'
+      - SECRET_KEY=my_precious
     depends_on:
       users-db:
         condition: service_healthy
