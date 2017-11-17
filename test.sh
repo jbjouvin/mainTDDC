@@ -11,6 +11,7 @@ inspect() {
 docker-compose run users-service python manage.py test
 inspect $? users-service
 
+testcafe -v
 testcafe chrome e2e
 inspect $? e2e
 
