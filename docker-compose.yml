@@ -20,7 +20,7 @@ services:
     build: https://github.com/jbjouvin/usersTDDC.git
     # volumes:
     #   - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
-    expose:
+    port:
       - "5001:5000"
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
