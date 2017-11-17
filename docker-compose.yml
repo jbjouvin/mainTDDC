@@ -26,6 +26,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+      - SECRET_KEY='my_precious'
     depends_on:
       users-db:
         condition: service_healthy
@@ -54,7 +55,7 @@ services:
       context: https://github.com/jbjouvin/clientTDDC.git
       args:
         - NODE_ENV=development
-        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+        - REACT_APP_USERS_SERVICE_URL=http://localhost
     ports:
       - '9000:9000' # expose ports - HOST:CONTAINER
     depends_on:
