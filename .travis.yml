@@ -42,4 +42,4 @@ script:
   - testcafe chrome e2e
 
 after_script:
-  - docker-compose down
+  - docker-compose -f docker-compose-prod.yml down
