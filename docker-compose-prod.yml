@@ -65,7 +65,7 @@ services:
   swagger:
     container_name: swagger
     build:
-      context: https://github.com/jbjouvin//swaggerTDDC.git
+      context: https://github.com/jbjouvin/swaggerTDDC.git
     ports:
       - '8080:8080' # expose ports - HOST:CONTAINER
     environment:
