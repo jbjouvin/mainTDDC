@@ -68,7 +68,7 @@ services:
   swagger:
     container_name: swagger
     build:
-      context: ../flask-microservices-swagger
+      context: ../swaggerTDDC
     ports:
       - '8080:8080' # expose ports - HOST:CONTAINER
     depends_on:
