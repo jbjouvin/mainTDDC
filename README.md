@@ -18,7 +18,7 @@ $ docker-machine create --driver amazonec2 --amazonec2-region eu-west-2 aws
 > Export variable before launch
 ```
 $ eval $(docker-machine env aws) && 
-export REACT_APP_USERS_SERVICE_URL=`echo $DOCKER_HOST | cut -c7- | cut -d: -f1` &&
+export REACT_APP_USERS_SERVICE_URL=http://`echo $DOCKER_HOST | cut -c7- | cut -d: -f1` &&
 export SECRET_KEY=`hexdump -n 16 -e '4/4 "%08X" 1 "\n"' /dev/random`
 ```
 
