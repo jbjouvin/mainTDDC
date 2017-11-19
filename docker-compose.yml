@@ -20,8 +20,8 @@ services:
     # build: https://github.com/jbjouvin/usersTDDC.git
     # volumes:
     #   - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
-    ports:
-      - "5001:5000"
+    expose:
+      - "5000"
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
