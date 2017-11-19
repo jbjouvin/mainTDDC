@@ -71,6 +71,8 @@ services:
       context: ../swaggerTDDC
     ports:
       - '8080:8080' # expose ports - HOST:CONTAINER
+    environment:
+      - API_URL=https://raw.githubusercontent.com/jbjouvin/swaggerTDDC/master/swagger.json
     depends_on:
       users-service:
         condition: service_started
