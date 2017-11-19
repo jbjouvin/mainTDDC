@@ -64,3 +64,13 @@ services:
         condition: service_started
     links:
       - users-service
+
+  swagger:
+    container_name: swagger
+    build:
+      context: ../flask-microservices-swagger
+    ports:
+      - '8080:8080' # expose ports - HOST:CONTAINER
+    depends_on:
+      users-service:
+        condition: service_started
