@@ -20,6 +20,10 @@ services:
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.11.2
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - USERS=usersTDDC
+    - USERS_REPO=https://github.com/jbjouvin/$USERS.git
+
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -34,12 +38,20 @@ before_script:
   - export SECRET_KEY=`hexdump -n 16 -e '4/4 "%08X" 1 "\n"' /dev/random`
   - sh -e /etc/init.d/xvfb start
   - sleep 3
-  - docker-compose -f docker-compose-prod.yml up --build -d
+  - docker-compose -f docker-compose-ci.yml up --build -d
 
 script:
-  - docker-compose -f docker-compose-prod.yml run users-service python manage.py recreate_db
-  - docker-compose -f docker-compose-prod.yml run users-service python manage.py test
+  - docker-compose -f docker-compose-ci.yml run users-service python manage.py recreate_db
+  - docker-compose -f docker-compose-ci.yml run users-service python manage.py test
   - testcafe chrome e2e
 
 after_script:
-  - docker-compose -f docker-compose-prod.yml down
+  - docker-compose -f docker-compose-ci.yml down
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_ID -p $DOCKER_PASSWORD
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  # users
+  - docker build $USERS_REPO -t $USERS:$COMMIT
+  - docker tag $USERS:$COMMIT $DOCKER_ID/$USERS:$TAG
+  - docker push $DOCKER_ID/$USERS
