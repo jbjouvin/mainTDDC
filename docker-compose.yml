@@ -4,8 +4,9 @@ services:
 
   users-db:
     container_name: users-db
-    build: ../usersTDDC/project/db
-    # build: https://github.com/jbjouvin/usersTDDC.git#master:project/db
+    build: 
+      context: ../usersTDDC/project/db
+    # context: https://github.com/jbjouvin/usersTDDC.git#master:project/db
     ports:
         - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -16,12 +17,14 @@ services:
 
   users-service:
     container_name: users-service
-    build: ../usersTDDC
+    build: 
+      context: ../usersTDDC
+      dockerfile: Dockerfile-local
     # build: https://github.com/jbjouvin/usersTDDC.git
-    # volumes:
-    #   - .:/usr/src/app # If working on docker machine on linux dont do this ! only win or osx
-    expose:
-      - "5000"
+    volumes:
+      - '../usersTDDC:/usr/src/app' # If working on docker machine on linux dont do this ! only win or osx
+    ports:
+      - "5001:5000"
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
@@ -32,7 +35,6 @@ services:
         condition: service_healthy
     links:
       - users-db
-    command: gunicorn -b 0.0.0.0:5000 manage:app
 
   nginx:
     container_name: nginx
@@ -54,9 +56,13 @@ services:
     build:
       # context: https://github.com/jbjouvin/clientTDDC.git
       context: ../clientTDDC
-      args:
+      dockerfile: Dockerfile-local
+    environment:
         - NODE_ENV=development
         - REACT_APP_USERS_SERVICE_URL=http://localhost
+    volumes:
+      - '../clientTDDC:/usr/src/app'
+      - '/usr/src/app/node_modules'
     ports:
       - '9000:9000' # expose ports - HOST:CONTAINER
     depends_on:
