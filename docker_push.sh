@@ -23,6 +23,24 @@ then
     export REPO=$AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com
   fi
 
+  if [ "$TRAVIS_BRANCH" == "staging" ]
+  then
+    export REACT_APP_USERS_SERVICE_URL="TBD"
+    export SECRET_KEY="TBD"
+  fi
+
+  if [ "$TRAVIS_BRANCH" == "production" ]
+  then
+    export REACT_APP_USERS_SERVICE_URL="TBD"
+    export SECRET_KEY="TBD"
+  fi
+
+  if [ "$TRAVIS_BRANCH" == "development" ]
+  then
+    export REACT_APP_USERS_SERVICE_URL="http://localhost"
+    export SECRET_KEY="my_precious"
+  fi
+
   if [ "$TRAVIS_BRANCH" == "development" ] || \
      [ "$TRAVIS_BRANCH" == "staging" ] || \
      [ "$TRAVIS_BRANCH" == "production" ]
