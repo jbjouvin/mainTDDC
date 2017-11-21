@@ -10,7 +10,7 @@ then
 
     configure_aws_cli() {
         aws --version
-        aws configure set default.region us-east-1
+        aws configure set default.region eu-west-2
         aws configure set default.output json
         echo "AWS Configured!"
     }
@@ -31,7 +31,7 @@ then
     }
 
     deploy_cluster() {
-      family="testdriven-staging"
+      family="staging"
       make_task_def
       register_definition
     }
