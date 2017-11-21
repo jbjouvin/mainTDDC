@@ -18,7 +18,7 @@ then
     ./awscli-bundle/install -b ~/bin/aws
     export PATH=~/bin:$PATH
     # add AWS_ACCOUNT_ID, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY env vars
-    eval $(aws ecr get-login --region eu-west-2)
+    eval $(aws ecr get-login --no-include-email --region eu-west-2)
     export TAG=$TRAVIS_BRANCH
     export REPO=$AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com
   fi
